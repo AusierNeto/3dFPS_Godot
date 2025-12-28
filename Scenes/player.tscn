@@ -1,0 +1,108 @@
+[gd_scene load_steps=14 format=3 uid="uid://dbve8kj7jbftk"]
+
+[ext_resource type="Script" uid="uid://c2omx8v5b0ku2" path="res://Scripts/player.gd" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://dlskpnbqsvcl0" path="res://images/crosshair-svgrepo-com.svg" id="2_6t5aa"]
+[ext_resource type="PackedScene" uid="uid://byaqyttf2n1hh" path="res://models/glock/glock 9mm.blend" id="2_cvnsp"]
+[ext_resource type="AudioStream" uid="uid://c5pweha5mcsqo" path="res://sounds/gunshot-352466.mp3" id="4_vgqql"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f60y1"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_v0iea"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvnsp"]
+albedo_color = Color(0.8980392, 0.70980394, 0.6313726, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v0iea"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6t5aa"]
+albedo_color = Color(0.8980392, 0.70980394, 0.6313726, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vgqql"]
+albedo_color = Color(0.8980392, 0.70980394, 0.6313726, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fkybt"]
+direction = Vector3(0, 0, -1)
+initial_velocity_min = 1.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.29999998
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x3wgy"]
+albedo_color = Color(1, 0.3529412, 0, 1)
+emission_enabled = true
+emission_energy_multiplier = 10.0
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_3smsa"]
+material = SubResource("StandardMaterial3D_x3wgy")
+size = Vector2(0.1, 0.1)
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+script = ExtResource("1_v0iea")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_f60y1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_v0iea")
+surface_material_override/0 = SubResource("StandardMaterial3D_cvnsp")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.082082, -0.3127815)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -100)
+
+[node name="HUD" type="CanvasLayer" parent="Head/Camera3D"]
+
+[node name="Crosshair" type="TextureRect" parent="Head/Camera3D/HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.0
+offset_top = -11.0
+offset_right = 9.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_6t5aa")
+expand_mode = 1
+
+[node name="Arms" type="Node3D" parent="Head"]
+transform = Transform3D(0.9941132, 0, 0.10834637, 0, 1, 0, -0.10834637, 0, 0.9941132, 0.19043934, -0.94791955, 0.33993846)
+
+[node name="Right" type="MeshInstance3D" parent="Head/Arms"]
+transform = Transform3D(0.19957595, -0.0010553838, 0.06486904, 0.0034495569, 0.19650243, -0.18539767, -0.01255127, 0.037224688, 0.9805201, 0.2082591, 0.42029238, -0.67110956)
+mesh = SubResource("BoxMesh_v0iea")
+surface_material_override/0 = SubResource("StandardMaterial3D_6t5aa")
+
+[node name="Left" type="MeshInstance3D" parent="Head/Arms"]
+transform = Transform3D(0.18697517, -0.016320111, -0.34546822, 0.0034495553, 0.1965024, -0.18539767, 0.07091107, 0.033473045, 0.91993433, -0.23389287, 0.42029238, -0.6618377)
+mesh = SubResource("BoxMesh_v0iea")
+surface_material_override/0 = SubResource("StandardMaterial3D_vgqql")
+
+[node name="Gun" type="Node3D" parent="Head/Arms"]
+
+[node name="glock 9mm" parent="Head/Arms/Gun" instance=ExtResource("2_cvnsp")]
+transform = Transform3D(0.12993485, 0.00010951696, -0.004113691, 0, 0.12995395, 0.0034597064, 0.0041151475, -0.0034579723, 0.12988882, 0.05508232, 0.44573033, -1.1443315)
+
+[node name="GunShot" type="AudioStreamPlayer3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.113441706, -0.2462027, -0.8079217)
+stream = ExtResource("4_vgqql")
+max_polyphony = 8
+
+[node name="MuzzleFlash" type="GPUParticles3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.104389474, -0.26882344, -1.0460603)
+emitting = false
+amount = 20
+lifetime = 0.05
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_fkybt")
+draw_pass_1 = SubResource("QuadMesh_3smsa")
