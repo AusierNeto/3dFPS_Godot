@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c6manf04j72nv"]
+[gd_scene load_steps=6 format=3 uid="uid://c6manf04j72nv"]
 
 [ext_resource type="PackedScene" uid="uid://dbve8kj7jbftk" path="res://Scenes/player.tscn" id="1_a02cp"]
+[ext_resource type="PackedScene" uid="uid://dah1783nvl7ad" path="res://Scenes/enemy.tscn" id="2_go701"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yp4wr"]
 
@@ -29,3 +30,6 @@ transform = Transform3D(0.8655156, -0.2051664, -0.45693496, 0.500882, 0.35452405
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7788544, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Enemy" parent="." instance=ExtResource("2_go701")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.528865, 2.5819135, 0)
