@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dbve8kj7jbftk"]
+[gd_scene load_steps=15 format=3 uid="uid://dbve8kj7jbftk"]
 
 [ext_resource type="Script" uid="uid://c2omx8v5b0ku2" path="res://Scripts/player.gd" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://dlskpnbqsvcl0" path="res://images/crosshair-svgrepo-com.svg" id="2_6t5aa"]
@@ -19,6 +19,12 @@ albedo_color = Color(0.8980392, 0.70980394, 0.6313726, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vgqql"]
 albedo_color = Color(0.8980392, 0.70980394, 0.6313726, 1)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vgqql"]
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("4_vgqql")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fkybt"]
 direction = Vector3(0, 0, -1)
@@ -94,7 +100,7 @@ transform = Transform3D(0.12993485, 0.00010951696, -0.004113691, 0, 0.12995395, 
 
 [node name="GunShot" type="AudioStreamPlayer3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.113441706, -0.2462027, -0.8079217)
-stream = ExtResource("4_vgqql")
+stream = SubResource("AudioStreamRandomizer_vgqql")
 max_polyphony = 8
 
 [node name="MuzzleFlash" type="GPUParticles3D" parent="Head"]
