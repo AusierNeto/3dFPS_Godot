@@ -1,14 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://dah1783nvl7ad"]
+[gd_scene load_steps=4 format=3 uid="uid://dah1783nvl7ad"]
 
-[ext_resource type="PackedScene" uid="uid://dla4yuv8g6g0x" path="res://models/zombie/Phychozomb.fbx" id="1_hghv2"]
+[ext_resource type="Script" uid="uid://djebpoxtlnlbq" path="res://Scripts/enemy.gd" id="1_1f0kj"]
+[ext_resource type="PackedScene" uid="uid://b6u2askx6mj4l" path="res://models/low_poly_zombie/square_zombie.glb" id="1_hghv2"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ne65n"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1f0kj"]
 
 [node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_1f0kj")
+
+[node name="square_zombie" parent="." instance=ExtResource("1_hghv2")]
+transform = Transform3D(-0.9999999, 0, 0.00048867066, 0, 1, 0, -0.00048867066, 0, -0.9999999, 0, 0, 0)
+
+[node name="Tronco" parent="square_zombie" index="0"]
+transform = Transform3D(0.99998045, 0, 0.006257337, 0, 1, 0, -0.0062573375, 0, 0.9999804, 0, 1.4154508, 0)
+
+[node name="Braco_D" parent="square_zombie/Tronco" index="0"]
+transform = Transform3D(1, 4.4388732e-11, 6.757086e-13, -4.3746794e-11, 0.9827207, 0.18509494, 7.552097e-12, -0.18509494, 0.9827207, -0.49999994, 0.29999995, 0)
+
+[node name="Braco_E" parent="square_zombie/Tronco" index="1"]
+transform = Transform3D(1, 4.4388732e-11, 6.757086e-13, -4.3746794e-11, 0.9827207, 0.18509494, 7.552097e-12, -0.18509494, 0.9827207, 0.49999997, 0.29999995, 0)
+
+[node name="Perna_D" parent="square_zombie/Tronco" index="3"]
+transform = Transform3D(1, -7.116754e-12, -2.349518e-10, 2.1795062e-11, 0.9980427, 0.06253294, 2.3404703e-10, -0.06253294, 0.9980427, -0.20000003, -0.5000001, 0)
+
+[node name="Perna_E" parent="square_zombie/Tronco" index="4"]
+transform = Transform3D(1, -1.8195449e-11, -2.3234042e-10, 3.6309048e-12, 0.9980427, -0.06253295, 2.3302357e-10, 0.06253295, 0.9980427, 0.20000003, -0.5000001, 0)
+
+[node name="AnimationPlayer" parent="square_zombie" index="1" groups=["enemy"]]
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.35, 0, 0, 0, 0.9, 0, 0, 0, 0.3, 0, 0.07712692, 0.052523553)
-shape = SubResource("CapsuleShape3D_ne65n")
+transform = Transform3D(1, 0, 0, 0, 1.2517473, 0, 0, 0, 1, 0, 1.2612219, 0)
+shape = SubResource("CapsuleShape3D_1f0kj")
 
-[node name="Phychozomb" parent="." instance=ExtResource("1_hghv2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7576759, 0)
+[editable path="square_zombie"]

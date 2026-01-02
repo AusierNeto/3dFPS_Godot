@@ -18,6 +18,7 @@ config/icon="res://images/icon.svg"
 [global_group]
 
 player="main character"
+enemy="zombies group"
 
 [input]
 

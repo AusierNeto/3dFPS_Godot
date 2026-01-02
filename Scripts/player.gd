@@ -16,6 +16,7 @@ const RECOIL_RETURN_SPEED = 5.0 # Quão rápido ela volta ao normal
 @onready var gun_sound = $Head/GunShot
 @onready var gun_particles = $Head/MuzzleFlash
 
+var weapon_damage: int = 25 # 4 tiros para matar (100 / 25)
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var default_hand_position: Vector3
 
@@ -75,5 +76,14 @@ func fire_weapon():
 		var target = ray_cast.get_collider()
 		var hit_point = ray_cast.get_collision_point()		
 		print("Target: ", target, " Hit Point: ", hit_point)
+		if target.has_method("take_damage"):
+			target.take_damage(weapon_damage)
+			
+			# Opcional: Criar partícula de sangue no ponto de impacto
+			# create_blood_effect(raycast.get_collision_point())
+		else:
+			# Acertou parede/chão
+			# create_bullet_hole(raycast.get_collision_point())
+			pass
 	else:
 		print("OFF")
